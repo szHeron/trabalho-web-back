@@ -1,4 +1,5 @@
-const express = require('express')
+import express from 'express'
+const database = require('./config/db')
 
 const app = express()
 const port = 3001
