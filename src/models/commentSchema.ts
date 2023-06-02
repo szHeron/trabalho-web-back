@@ -9,7 +9,7 @@ const commentSchema = new Schema({
     likes: [String],
     comments: Number,
     createdAt: Date,
-    createdBy: {id: String, name: String}
+    author: String
 });
 
 module.exports = mongoose.model('comment', commentSchema)

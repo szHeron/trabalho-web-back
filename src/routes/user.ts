@@ -3,7 +3,7 @@ import z from 'zod'
 const userSchema = require('../models/userSchema') 
 const routes = express.Router();
 
-routes.get('/login', async (req, res) => {
+routes.post('/login', async (req, res) => {
     const createUser = z.object({
         email: z.string().email(),
         password: z.string()
