@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-const userSchema = require('./userSchema') 
 const { Schema } = mongoose;
 
 const commentSchema = new Schema({
@@ -9,7 +8,10 @@ const commentSchema = new Schema({
     likes: [String],
     comments: Number,
     createdAt: Date,
-    author: String
+    author: {
+        _id: String,
+        name: String
+    }
 });
 
 module.exports = mongoose.model('comment', commentSchema)
