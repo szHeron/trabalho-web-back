@@ -24,7 +24,7 @@ routes.post('/createComment', async (req, res) => {
             author,
             createdAt: Date.now(),
             likes: [],
-            comments: 0
+            comments: []
         });
 
         return res.json(commentCreated);
@@ -62,10 +62,14 @@ routes.put('/comment/:id', async (req, res) => {
             title: z.string(),
             description: z.string(),
             likes: z.array(z.string()),
-            type: z.string()
+            type: z.string(),
+            comments: z.array(z.object({
+                author_name: z.string(),
+                comment: z.string()
+            }))
         })
-        const { title, description, likes, type } = createComment.parse(req.body)
-        const comment = await commentSchema.findOneAndUpdate({_id: req.params.id}, {title, description, likes, type})
+        const { title, description, likes, type, comments } = createComment.parse(req.body)
+        const comment = await commentSchema.findOneAndUpdate({_id: req.params.id}, {title, description, likes, type, comments})
         return res.json(comment);
     }catch(error){
         console.log(error)

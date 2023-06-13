@@ -6,7 +6,10 @@ const commentSchema = new Schema({
     description: String,
     type: String,
     likes: [String],
-    comments: Number,
+    comments: [{
+        author_name: String,
+        comment: String,
+    }],
     createdAt: Date,
     author: {
         _id: String,
