@@ -1,8 +1,12 @@
 import express from 'express';
 import z from 'zod'
 const commentSchema = require('../models/commentSchema') 
-const userSchema = require('../models/userSchema')
+const imageUpload = require('../utils/imageUpload')
+const multer = require('multer');
 const routes = express.Router();
+const upload = multer();
+
+routes.post('/uploadImage', upload.single('file'), imageUpload.ImageUpload);
 
 routes.post('/createComment', async (req, res) => {
     const createComment = z.object({
@@ -12,9 +16,10 @@ routes.post('/createComment', async (req, res) => {
         author: z.object({
             _id: z.string(),
             name: z.string()
-        })
+        }),
+        photo: z.string().nullable()
     })
-    const { title, description, type, author } = createComment.parse(req.body)
+    const { title, description, type, author, photo } = createComment.parse(req.body)
 
     try{
         const commentCreated = await commentSchema.create({
@@ -22,9 +27,10 @@ routes.post('/createComment', async (req, res) => {
             description,
             type,
             author,
+            photo: photo?photo:"",
             createdAt: Date.now(),
             likes: [],
-            comments: []
+            comments: [],
         });
 
         return res.json(commentCreated);

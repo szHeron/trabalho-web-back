@@ -14,7 +14,8 @@ const commentSchema = new Schema({
     author: {
         _id: String,
         name: String
-    }
+    },
+    photo: String
 });
 
 module.exports = mongoose.model('comment', commentSchema)
