@@ -12,9 +12,10 @@ routes.post('/login', async (req, res) => {
 
     try{
         const user = await userSchema.findOne({email: email, password: password}).exec()
+
         if(!user)
-            return res.json({"error": "Email ou senha invalidos"});
-        return res.json(user);
+            return res.status(401).json({"error": "Email ou senha invalidos"});
+        return res.status(200).json(user);
     }catch(error){
         return res.status(400).json({error});
     }
