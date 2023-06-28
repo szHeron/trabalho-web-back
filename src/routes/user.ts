@@ -29,6 +29,11 @@ routes.post('/register', async (req, res) => {
     })
     const { name, email, password } = createUser.parse(req.body)
     try{
+        const user = await userSchema.findOne({email: email}).exec()
+
+        if(user)
+            return res.status(401).json({"error": "Já existe um usuario com este email!"});
+
         const userCreated = await userSchema.create({
             name,
             email,
